@@ -1,5 +1,7 @@
 // Массив доменов, с которых разрешены кросс-доменные запросы
 const allowedCors = [
+  'http://api.movies-service.nomoredomainsrocks.ru',
+  // 'https://api.movies-service.nomoredomainsrocks.ru',
   'http://localhost:3000',
 ];
 

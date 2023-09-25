@@ -28,7 +28,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: 'http://movies-service.nomoredomainsrocks.ru',
     exposedHeaders: ['set-cookie'],
     credentials: true,
   }),
