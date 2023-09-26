@@ -3,6 +3,7 @@ const allowedCors = [
   'http://api.movies-service.nomoredomainsrocks.ru',
   'https://api.movies-service.nomoredomainsrocks.ru',
   'http://localhost:3000',
+  'https://localhost:3000',
 ];
 
 const corsHandler = (req, res, next) => {

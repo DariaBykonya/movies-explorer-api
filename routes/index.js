@@ -13,7 +13,7 @@ const {
   validationLogin,
 } = require('../middlewares/validation');
 
-// вызов роутеров для пользователей и карточек
+// вызов роутеров для пользователей и фильмов
 router.post('/signup', validationCreateUser, createUser);
 router.post('/signin', validationLogin, login);
 

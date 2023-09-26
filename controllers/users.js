@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const User = require('../models/user');
+const { SALT_ROUNDS, HTTP_STATUS } = require('../constants');
 
 // Errors
 const NotFoundError = require('../errors/NotFoundError');
@@ -9,8 +10,6 @@ const BadRequestError = require('../errors/BadRequestError');
 const ConflictError = require('../errors/ConflictError');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
-
-const SALT_ROUNDS = 10;
 
 module.exports.createUser = (req, res, next) => {
   const {
@@ -24,7 +23,7 @@ module.exports.createUser = (req, res, next) => {
       password: hash,
     })
       .then(() => {
-        res.status(201).send({
+        res.status(HTTP_STATUS.CREATED).send({
           data: {
             name, email,
           },
@@ -68,7 +67,7 @@ module.exports.currentUser = (req, res, next) => {
   const userId = req.user._id;
   User.findById(userId)
     .then((user) => {
-      res.status(200).send(user);
+      res.status(HTTP_STATUS.OK).send(user);
     })
     .catch(next);
 };
@@ -85,22 +84,25 @@ module.exports.updateUser = (req, res, next) => {
       if (!user) {
         throw new NotFoundError('Пользователь по указанному _id не найден');
       }
-      return res.status(200).send(user);
+      return res.status(HTTP_STATUS.OK).send(user);
     })
     .catch((err) => {
-      if (err instanceof mongoose.Error.ValidationError) {
-        next(
+      if (err.code === 11000) {
+        return next(
+          new ConflictError('Пользователь с таким email уже существует'),
+        );
+      } if (err instanceof mongoose.Error.ValidationError) {
+        return next(
           new BadRequestError(
-            'Переданы некорректные данные при обновлении профиля',
+            'Переданы некорректные данные при создании пользователя',
           ),
         );
-      } else {
-        next(err);
       }
+      return next(err);
     });
 };
 
 module.exports.logout = (req, res) => {
   res.clearCookie('token'); // Удаляем куку с именем 'token'
-  res.status(200).json({ message: 'Выход выполнен успешно' });
+  res.status(HTTP_STATUS.OK).json({ message: 'Выход выполнен успешно' });
 };

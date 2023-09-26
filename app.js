@@ -1,10 +1,14 @@
 require('dotenv').config();
 
 const express = require('express');
+const helmet = require('helmet');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const cors = require('cors');
+const limiter = require('./middlewares/limiter');
+const config = require('./config');
+const { HTTP_STATUS } = require('./constants');
 
 const router = require('./routes/index');
 
@@ -15,9 +19,13 @@ const { PORT = 3000 } = process.env;
 
 const app = express();
 
+app.use(limiter);
+
+app.use(helmet());
+
 app.use(cookieParser());
 
-mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb', {
+mongoose.connect(config.mongoURL, {
   useNewUrlParser: true,
 });
 
@@ -47,10 +55,10 @@ app.use((err, req, res, next) => {
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   res.header('Access-Control-Allow-Credentials', true);
-  const { statusCode = 500, message } = err;
+  const { statusCode = HTTP_STATUS.INTERNAL_SERVER_ERROR, message } = err;
 
   res.status(statusCode).send({
-    message: statusCode === 500 ? 'На сервере произошла ошибка' : message,
+    message: statusCode === HTTP_STATUS.INTERNAL_SERVER_ERROR ? 'На сервере произошла ошибка' : message,
   });
   next();
 });
