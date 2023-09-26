@@ -94,7 +94,7 @@ module.exports.updateUser = (req, res, next) => {
       } if (err instanceof mongoose.Error.ValidationError) {
         return next(
           new BadRequestError(
-            'Переданы некорректные данные при создании пользователя',
+            'Переданы некорректные данные при обновлении данных пользователя',
           ),
         );
       }
