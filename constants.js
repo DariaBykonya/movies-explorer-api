@@ -1,0 +1,9 @@
+const HTTP_STATUS = {
+  OK: 200,
+  CREATED: 201,
+  INTERNAL_SERVER_ERROR: 500,
+};
+
+const SALT_ROUNDS = 10;
+
+module.exports = { HTTP_STATUS, SALT_ROUNDS };
