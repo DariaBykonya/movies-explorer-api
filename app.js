@@ -3,7 +3,6 @@ require('dotenv').config();
 const express = require('express');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
-const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const cors = require('cors');
 const limiter = require('./middlewares/limiter');
@@ -23,7 +22,6 @@ app.use(limiter);
 
 app.use(helmet());
 
-app.use(cookieParser());
 
 mongoose.connect(config.mongoURL, {
   useNewUrlParser: true,
@@ -36,8 +34,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   cors({
-    origin: 'https://movies-service.nomoredomainsrocks.ru',
-    exposedHeaders: ['set-cookie'],
+    origin: 'http://localhost:3001',
     credentials: true,
   }),
 );

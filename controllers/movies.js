@@ -9,9 +9,10 @@ const ForbiddenError = require('../errors/ForbiddenError');
 
 module.exports.getMovies = (req, res, next) => {
   const userId = req.user._id;
-
-  Movie.find({ userId })
-    .then((movie) => res.status(HTTP_STATUS.OK).send({ movie }))
+  Movie.find({ owner: userId })
+    .then((movies) => {
+      res.status(HTTP_STATUS.OK).send({ movies });
+    })
     .catch(next);
 };
 
@@ -30,7 +31,6 @@ module.exports.createMovie = (req, res, next) => {
     thumbnail,
     movieId,
   } = req.body;
-
   return Movie.create({
     country,
     director,
@@ -62,6 +62,7 @@ module.exports.createMovie = (req, res, next) => {
 };
 
 module.exports.deleteMovie = (req, res, next) => {
+  console.log('Deleting movie from likes', req.params);
   const { movieId } = req.params;
   const ownerId = req.user._id;
   Movie.findById(movieId)
