@@ -22,7 +22,6 @@ app.use(limiter);
 
 app.use(helmet());
 
-
 mongoose.connect(config.mongoURL, {
   useNewUrlParser: true,
 });
@@ -34,7 +33,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   cors({
-    origin: 'http://localhost:3001',
+    origin: [
+      'http://localhost:3001',
+      'https://movies-service.nomoredomainsrocks.ru',
+    ],
     credentials: true,
   }),
 );
@@ -49,13 +51,19 @@ app.use(errors());
 
 app.use((err, req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept',
+  );
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   res.header('Access-Control-Allow-Credentials', true);
   const { statusCode = HTTP_STATUS.INTERNAL_SERVER_ERROR, message } = err;
 
   res.status(statusCode).send({
-    message: statusCode === HTTP_STATUS.INTERNAL_SERVER_ERROR ? 'На сервере произошла ошибка' : message,
+    message:
+      statusCode === HTTP_STATUS.INTERNAL_SERVER_ERROR
+        ? 'На сервере произошла ошибка'
+        : message,
   });
   next();
 });

@@ -34,11 +34,6 @@ module.exports.validationLogin = celebrate({
   }),
 });
 
-// module.exports.validationUserId = celebrate({
-//   params: Joi.object().keys({
-//     userId: Joi.string().hex().length(24).required(),
-//   }),
-// });
 
 module.exports.validationUpdateUser = celebrate({
   body: Joi.object().keys({
