@@ -6,7 +6,6 @@ const {
 
 const {
   validationUpdateUser,
-  // validationUserId,
 } = require('../middlewares/validation');
 
 router.get('/me', currentUser);
