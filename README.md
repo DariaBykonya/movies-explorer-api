@@ -12,6 +12,6 @@ API на стороне сервера работает на сервере Expr
 - Deployment: Nginx on Yandex Cloud
 
 ### :arrow_forward: *Установка и запуск проекта*
-1. Клонировать репозиторий:  `https://github.com/DariaBykonya/movies-explorer-api.git`
+1. Клонировать репозиторий:  `git clone https://github.com/DariaBykonya/movies-explorer-api.git`
 2. Установить зависимости: `npm install`
 3. Запустить сервер: `npm run start` / Запустить сервер с hot-reload: `npm run dev`
