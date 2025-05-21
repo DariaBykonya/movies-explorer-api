@@ -1,9 +1,6 @@
 // Массив доменов, с которых разрешены кросс-доменные запросы
 const allowedCors = [
-  'http://api.movies-service.nomoredomainsrocks.ru',
-  'https://api.movies-service.nomoredomainsrocks.ru',
-  'http://movies-service.nomoredomainsrocks.ru',
-  'https://movies-service.nomoredomainsrocks.ru',
+  // TODO: добавить домены для фронта и бэка после приобретения
   'https://localhost:3000',
   'http://localhost:3000',
   'http://localhost:3001',
