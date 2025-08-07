@@ -14,7 +14,7 @@ const router = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const corsHandler = require('./middlewares/corsHandler');
 
-const { PORT = 3001 } = process.env;
+const { PORT = 3000 } = process.env;
 
 const app = express();
 
@@ -34,8 +34,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
     origin: [
-      'http://localhost:3001',
       'http://localhost:3000',
+'https://darchdev.com',
       'https://movies-service.nomoredomainsrocks.ru',
     ],
     credentials: true,
@@ -44,7 +44,7 @@ app.use(
 
 app.use(requestLogger); // подключаем логгер запросов
 
-app.use(router);
+app.use('/api', router);
 
 app.use(errorLogger); // подключаем логгер ошибок
 

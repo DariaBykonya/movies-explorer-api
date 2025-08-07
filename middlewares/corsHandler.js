@@ -4,6 +4,8 @@ const allowedCors = [
   'https://localhost:3000',
   'http://localhost:3000',
   'http://localhost:3001',
+'https://darchdev.com/api',
+'https://darchdev.com'
 ];
 
 const corsHandler = (req, res, next) => {
